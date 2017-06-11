@@ -5,7 +5,7 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq
-RUN apt-get install sudo git ansible -y
+RUN apt-get install sudo git dirmngr ansible -y
 
 RUN ansible --version
 
