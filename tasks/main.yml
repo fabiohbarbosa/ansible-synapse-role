@@ -1,0 +1,62 @@
+---
+- debug:
+    msg:
+      - "***********************************************************************"
+      - "Running fabiohbarbosa.synapse role for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
+      - "***********************************************************************"
+
+- name: Checking operating system distribution compatibility
+  fail: msg="Role not compatibility for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
+  when: (ansible_distribution != "Ubuntu" and ansible_distribution != "Linuxmint")
+
+- name: Checking operating system release compatibility for Linux Ubuntu
+  fail: msg="Role not compatibility for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
+  when: ansible_distribution == "Ubuntu" and
+    (ansible_distribution_release != "xenial" and ansible_distribution_release != "yakkety" and ansible_distribution_release != "zesty")
+
+- name: Checking operating system release compatibility for Linux Mint
+  fail: msg="Role not compatibility for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
+  when: ansible_distribution == "Linuxmint" and
+    (ansible_distribution_release != "sarah" and ansible_distribution_release != "serena" and ansible_distribution_release != "sonya")
+
+- name: Set docker xenial version to apt repository
+  set_fact:
+     repository_version: zesty
+  when: ansible_distribution_release == '{{item}}'
+  with_items:
+    - 'zesty'
+
+- name: Set docker yakkety version to apt repository
+  set_fact:
+     repository_version: yakkety
+  when: ansible_distribution_release == '{{item}}'
+  with_items:
+    - 'yakkety'
+
+- name: Set docker xenial version to apt repository
+  set_fact:
+     repository_version: xenial
+  when: ansible_distribution_release == '{{item}}'
+  with_items:
+    - 'xenial'
+    - 'sarah'
+    - 'serena'
+    - 'sonya'
+
+- name: Apt key for repository
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 3DD99294193A09EF9270EEAFE4010F076C2225A4
+  become: yes
+
+- name: Add apt repository
+  apt_repository:
+    repo: deb [arch=amd64] http://ppa.launchpad.net/synapse-core/testing/ubuntu {{ repository_version }} main
+    state: present
+  become: yes
+
+- name: Installing synapse
+  apt:
+    name:  synapse
+    update_cache: yes
+  become: yes

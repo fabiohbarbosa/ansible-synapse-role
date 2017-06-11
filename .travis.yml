@@ -1,0 +1,11 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - bash test.sh
+
+notifications:
+  email: true
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
