@@ -33,6 +33,20 @@
     - 'serena'
     - 'sonya'
 
+- name: Set docker wily version to apt repository
+  set_fact:
+     repository_version: wily
+  when: ansible_distribution_release == '{{item}}'
+  with_items:
+    - 'wily'
+
+- name: Set docker vivid version to apt repository
+  set_fact:
+     repository_version: vivid
+  when: ansible_distribution_release == '{{item}}'
+  with_items:
+    - 'vivid'
+
 - name: Set docker trusty version to apt repository
   set_fact:
      repository_version: trusty
@@ -43,6 +57,13 @@
     - 'rafaela'
     - 'rebecca'
     - 'qiana'
+
+- name: Set docker precise version to apt repository
+  set_fact:
+     repository_version: precise
+  when: ansible_distribution_release == '{{item}}'
+  with_items:
+    - 'precise'
 
 - name: Checking compatibility
   fail: msg="This role is not compatibility with {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
