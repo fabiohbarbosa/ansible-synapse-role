@@ -13,13 +13,18 @@ Requirements
 
 Supported Distributions
 ------------
-- Linux Mint 18 - Sarah
-- Linux Mint 18.1 - Serena
-- Linux Mint 18.2 - Sonya
+- Linux Mint 17 Qiana
+- Linux Mint 17.1 Rebecca
+- Linux Mint 17.2 Rafaela
+- Linux Mint 17.3 Rosa
+- Linux Mint 18 Sarah
+- Linux Mint 18.1 Serena
+- Linux Mint 18.2 Sonya
 
-- Ubuntu 16.04 - Xenial
-- Ubuntu 16.10 - Yakkety
-- Ubuntu 17.04 - Zesty
+- Ubuntu 14.04 Trusty
+- Ubuntu 16.04 Xenial
+- Ubuntu 16.10 Yakkety
+- Ubuntu 17.04 Zesty
 
 Example Playbook
 ----------------
@@ -32,5 +37,9 @@ Including an example of how to use your role (for instance, with variables passe
 
 License
 -------
+
+Test
+-------
+Use my [docker ansible runner image](https://hub.docker.com/r/fabiohbarbosa/ansible-runner/) to run this role. see all docker run commands in `.travis.yml` file.
 
 MIT

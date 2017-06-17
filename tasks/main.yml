@@ -26,16 +26,33 @@
   with_items:
     - 'zesty'
 
+- name: Set docker yakkety version to apt repository
+  set_fact:
+     repository_version: yakkety
+  when: ansible_distribution_release == '{{item}}'
+  with_items:
+    - 'yakkety'
+
 - name: Set docker xenial version to apt repository
   set_fact:
      repository_version: xenial
   when: ansible_distribution_release == '{{item}}'
   with_items:
-    - 'yakkety'
     - 'xenial'
     - 'sarah'
     - 'serena'
     - 'sonya'
+
+- name: Set docker trusty version to apt repository
+  set_fact:
+     repository_version: trusty
+  when: ansible_distribution_release == '{{item}}'
+  with_items:
+    - 'trusty'
+    - 'rosa'
+    - 'rafaela'
+    - 'rebecca'
+    - 'qiana'
 
 - name: Apt key for repository
   apt_key:
