@@ -9,16 +9,6 @@
   fail: msg="Role not compatibility for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
   when: (ansible_distribution != "Ubuntu" and ansible_distribution != "Linuxmint")
 
-- name: Checking operating system release compatibility for Linux Ubuntu
-  fail: msg="Role not compatibility for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
-  when: ansible_distribution == "Ubuntu" and
-    (ansible_distribution_release != "xenial" and ansible_distribution_release != "yakkety" and ansible_distribution_release != "zesty")
-
-- name: Checking operating system release compatibility for Linux Mint
-  fail: msg="Role not compatibility for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
-  when: ansible_distribution == "Linuxmint" and
-    (ansible_distribution_release != "sarah" and ansible_distribution_release != "serena" and ansible_distribution_release != "sonya")
-
 - name: Set docker xenial version to apt repository
   set_fact:
      repository_version: zesty
@@ -53,6 +43,10 @@
     - 'rafaela'
     - 'rebecca'
     - 'qiana'
+
+- name: Checking compatibility
+  fail: msg="This role is not compatibility with {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
+  when: repository_version is not defined
 
 - name: Apt key for repository
   apt_key:
