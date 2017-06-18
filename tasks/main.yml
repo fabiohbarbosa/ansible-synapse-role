@@ -9,33 +9,59 @@
   fail: msg="Role not compatibility for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
   when: (ansible_distribution != "Ubuntu" and ansible_distribution != "Linuxmint")
 
-- name: Checking operating system release compatibility for Linux Ubuntu
-  fail: msg="Role not compatibility for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
-  when: ansible_distribution == "Ubuntu" and
-    (ansible_distribution_release != "xenial" and ansible_distribution_release != "yakkety" and ansible_distribution_release != "zesty")
-
-- name: Checking operating system release compatibility for Linux Mint
-  fail: msg="Role not compatibility for {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
-  when: ansible_distribution == "Linuxmint" and
-    (ansible_distribution_release != "sarah" and ansible_distribution_release != "serena" and ansible_distribution_release != "sonya")
-
 - name: Set docker xenial version to apt repository
   set_fact:
      repository_version: zesty
-  when: ansible_distribution_release == '{{item}}'
+  when: ansible_distribution_release|string in item
   with_items:
     - 'zesty'
+
+- name: Set docker yakkety version to apt repository
+  set_fact:
+     repository_version: yakkety
+  when: ansible_distribution_release|string in item
+  with_items:
+    - 'yakkety'
 
 - name: Set docker xenial version to apt repository
   set_fact:
      repository_version: xenial
-  when: ansible_distribution_release == '{{item}}'
+  when: ansible_distribution_release|string in item
   with_items:
-    - 'yakkety'
     - 'xenial'
     - 'sarah'
     - 'serena'
     - 'sonya'
+
+- name: Set docker wily version to apt repository
+  set_fact:
+     repository_version: wily
+  when: ansible_distribution_release|string in item
+  with_items:
+    - 'wily'
+
+- name: Set docker trusty version to apt repository
+  set_fact:
+     repository_version: trusty
+  when: ansible_distribution_release|string in item
+  with_items:
+    - 'trusty'
+    - 'vivid'
+    - 'rosa'
+    - 'rafaela'
+    - 'rebecca'
+    - 'qiana'
+
+- name: Set docker precise version to apt repository
+  set_fact:
+     repository_version: precise
+  when: ansible_distribution_release|string in item
+  with_items:
+    - 'precise'
+
+- name: Checking compatibility
+  fail: msg="This role is not compatibility with {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
+  when: repository_version is not defined
 
 - name: Apt key for repository
   apt_key:
