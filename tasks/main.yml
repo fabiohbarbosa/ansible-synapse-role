@@ -12,21 +12,21 @@
 - name: Set docker xenial version to apt repository
   set_fact:
      repository_version: zesty
-  when: ansible_distribution_release == '{{item}}'
+  when: ansible_distribution_release|string in item
   with_items:
     - 'zesty'
 
 - name: Set docker yakkety version to apt repository
   set_fact:
      repository_version: yakkety
-  when: ansible_distribution_release == '{{item}}'
+  when: ansible_distribution_release|string in item
   with_items:
     - 'yakkety'
 
 - name: Set docker xenial version to apt repository
   set_fact:
      repository_version: xenial
-  when: ansible_distribution_release == '{{item}}'
+  when: ansible_distribution_release|string in item
   with_items:
     - 'xenial'
     - 'sarah'
@@ -36,23 +36,17 @@
 - name: Set docker wily version to apt repository
   set_fact:
      repository_version: wily
-  when: ansible_distribution_release == '{{item}}'
+  when: ansible_distribution_release|string in item
   with_items:
     - 'wily'
-
-- name: Set docker vivid version to apt repository
-  set_fact:
-     repository_version: vivid
-  when: ansible_distribution_release == '{{item}}'
-  with_items:
-    - 'vivid'
 
 - name: Set docker trusty version to apt repository
   set_fact:
      repository_version: trusty
-  when: ansible_distribution_release == '{{item}}'
+  when: ansible_distribution_release|string in item
   with_items:
     - 'trusty'
+    - 'vivid'
     - 'rosa'
     - 'rafaela'
     - 'rebecca'
@@ -61,7 +55,7 @@
 - name: Set docker precise version to apt repository
   set_fact:
      repository_version: precise
-  when: ansible_distribution_release == '{{item}}'
+  when: ansible_distribution_release|string in item
   with_items:
     - 'precise'
 
